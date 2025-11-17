@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+myenv/
+venv/
+ENV/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data files (if you have any)
+*.csv
+*.json
+*.txt
+
+# Model files (if you don't want to commit them)
+model.pkl
+*.h5
+*.pt
+*.pth
+
+# Environment variables
+.env
+.env.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Requirements (you might want to keep requirements.txt, but ignore generated ones)
+requirements-dev.txt
+requirements-test.txt
+
+# Logs and temporary files
+logs/
+tmp/
+temp/
+
+.gitignore
