@@ -23,10 +23,13 @@ python -m uvicorn app:app --reload --port 8000
 
 - **Health:** `GET /health`
 
-Example:
+Example (Python):
 
-```bash
-curl http://127.0.0.1:8000/health
+```python
+import requests
+
+response = requests.get("http://127.0.0.1:8000/health")
+print(response.json())
 ```
 
 - **Predict:** `POST /predict` — accepts a JSON body matching the `UserInput` schema and returns a `PredictionResponse`.
@@ -41,21 +44,47 @@ Request body fields (from `schema/user_input.py`):
 - `city` (string)
 - `occupation` (one of `retired`, `freelancer`, `student`, `government_job`, `business_owner`, `unemployed`, `private_job`)
 
-Example `curl` request:
+Example (Python with requests):
 
-```bash
-curl -X POST "http://127.0.0.1:8000/predict" \
-  -H "Content-Type: application/json" \
-  -d '{"age":30, "weight":70.0, "height":1.75, "income_lpa":8.5, "smoker":false, "city":"Mumbai", "occupation":"private_job"}'
+```python
+import requests
+
+payload = {
+    "age": 30,
+    "weight": 70.0,
+    "height": 1.75,
+    "income_lpa": 8.5,
+    "smoker": False,
+    "city": "Mumbai",
+    "occupation": "private_job"
+}
+
+response = requests.post("http://127.0.0.1:8000/predict", json=payload)
+print(response.json())
 ```
 
-PowerShell (Invoke-RestMethod) example:
+Example (Python with httpx for async):
 
-```powershell
-#$body can be created as a hashtable and converted to JSON to avoid quoting issues
-#$body = @{ age=30; weight=70.0; height=1.75; income_lpa=8.5; smoker=$false; city='Mumbai'; occupation='private_job' }
-#$json = $body | ConvertTo-Json
-#Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/predict -Body $json -ContentType 'application/json'
+```python
+import httpx
+import asyncio
+
+async def predict():
+    payload = {
+        "age": 30,
+        "weight": 70.0,
+        "height": 1.75,
+        "income_lpa": 8.5,
+        "smoker": False,
+        "city": "Mumbai",
+        "occupation": "private_job"
+    }
+    
+    async with httpx.AsyncClient() as client:
+        response = await client.post("http://127.0.0.1:8000/predict", json=payload)
+        print(response.json())
+
+asyncio.run(predict())
 ```
 
 Example response (shape defined in `schema/prediction_response.py`):
